@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pincode Finder</title>
+</head>
+<body>
+    <div>
+        <h3>Use this form to submit a search request:</h3><br>Enter PIN Code:<table></table>
+        <form>
+            <input type="text" name="pincode" placeholder="Enter Pincode" required>
+            <button type="submit">
+                Find
+            </button>
+        </form>
+    </div>
+    <div id="details-box" class="hriks"></div>
+</body>
+<script type="text/javascript">
+    (function(){
+        const form = document.querySelector("form")
+        form.addEventListener("submit", fetchUpdatePincode)
+    })()
+    function fetchUpdatePincode(event){
+        event.preventDefault()
+        const pincode = document.querySelector("input")
+        fetch("https://api.postalpincode.in/pincode/" + pincode.value)
+        .then(response => response.json())
+        .then(updateDetailsBox)
+        return false
+    }
+
+    function updateDetailsBox(response) {
+        response = response[0]
+        const detailBox = document.getElementById("details-box")
+        detailBox.innerHTML = ""
+        detailBox.innerHTML = "<h2>" + response.Message + "</h2>"
+        content = `<table>
+            <thead>
+                <tr>
+                    <th>Block</th>
+                    <th>BranchType</th>
+                    <th>Circle</th>
+                    <th>Name</th>
+                    <th>Division</th>
+                    <th>District</th>
+                </tr>
+            <thead>`
+        content += "<tbody>" + response.PostOffice.map(postOffice => {
+            return `<tr>
+                <td>${postOffice.Block}</td>
+                <td>${postOffice.BranchType}</td>
+                <td>${postOffice.Circle}</td>
+                <td>${postOffice.Name}</td>
+                <td>${postOffice.Division}</td>
+                <td>${postOffice.District}</td>
+            </tr>`
+        }).join("") + "</tbody>"
+        content += "</table>"
+        detailBox.innerHTML += content
+    }
+</script>
+</html>

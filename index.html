@@ -8,29 +8,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pincode Finder</title>
 </head>
+
 <body>
     <div>
-        <h3>Use this form to submit a search request:</h3><br>Enter PIN Code:<table></table>
+        <h1>
+            <center>DATA FETCH</center>
+        </h1>
+        <h2>
+            <center>Welcome to PINCODE details on the web!</center>
+        </h2>
+        <h3>Use this form to submit a search request:</h3>
+        <h4>Enter PIN Code:</h4>
+        <table></table>
         <form>
             <input type="text" name="pincode" placeholder="Enter Pincode" required>
             <button type="submit">
-                Find
+                Proceed
             </button>
         </form>
     </div>
     <div id="details-box" class="hriks"></div>
 </body>
 <script type="text/javascript">
-    (function(){
+    (function () {
         const form = document.querySelector("form")
         form.addEventListener("submit", fetchUpdatePincode)
     })()
-    function fetchUpdatePincode(event){
+    function fetchUpdatePincode(event) {
         event.preventDefault()
         const pincode = document.querySelector("input")
         fetch("https://api.postalpincode.in/pincode/" + pincode.value)
-        .then(response => response.json())
-        .then(updateDetailsBox)
+            .then(response => response.json())
+            .then(updateDetailsBox)
         return false
     }
 
@@ -42,26 +51,151 @@
         content = `<table>
             <thead>
                 <tr>
-                    <th>Block</th>
-                    <th>BranchType</th>
-                    <th>Circle</th>
+                    <th>Pincode</th>
                     <th>Name</th>
-                    <th>Division</th>
+                    <th>Description</th>
+                    <th>BranchType</th>
+                    <th>DeliveryStatus</th>
+                    <th>Circle</th>
                     <th>District</th>
+                    <th>Division</th>
+                    <th>Region</th>
+                    <th>Block</th>
+                    <th>State</th>
+                    <th>Country</th>
                 </tr>
             <thead>`
         content += "<tbody>" + response.PostOffice.map(postOffice => {
             return `<tr>
-                <td>${postOffice.Block}</td>
-                <td>${postOffice.BranchType}</td>
-                <td>${postOffice.Circle}</td>
+                <td>${postOffice.Pincode}</td>
                 <td>${postOffice.Name}</td>
+                <td>${postOffice.Description}</td>
+                <td>${postOffice.BranchType}</td>
+                <td>${postOffice.DeliveryStatus}</td>
+                <td>${postOffice.Circle}</td>
                 <td>${postOffice.Division}</td>
                 <td>${postOffice.District}</td>
+                <td>${postOffice.Region}</td>
+                <td>${postOffice.Block}</td>
+                <td>${postOffice.State}</td>
+                <td>${postOffice.Country}</td>
             </tr>`
         }).join("") + "</tbody>"
         content += "</table>"
         detailBox.innerHTML += content
     }
 </script>
+
+<style>
+    h3 {
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    body {
+        margin: 20px;
+        height: 700px;
+        padding-right: 200px;
+        padding-top: 20px;
+
+
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+
+    }
+
+    th,
+    td {
+        padding: 8px;
+        text-align: left;
+        border: 1px dotted black;
+        font-size: 15px;
+    }
+
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    #text {
+        text-align: center;
+    }
+
+    body {
+        margin: 20px;
+        height: 700px;
+        padding-right: 200px;
+        padding-top: 20px;
+
+
+    }
+
+    .icon-bar {
+        position: fixed;
+        top: 30%;
+        right: 10px;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+
+    .icon-bar a {
+        display: block;
+        text-align: center;
+        padding: 16px;
+        transition: all 0.3s ease;
+        color: white;
+        font-size: 20px;
+    }
+
+    .icon-bar a:hover {
+        background-color: #000;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    h3 {
+        text-align: center;
+    }
+
+    h4 {
+        text-align: center;
+    }
+
+    form {
+        padding-left: 400px;
+    }
+
+    form {
+        display: block;
+        margin-top: 0em;
+    }
+
+    button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        text-align: center;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    html {
+        background-color: rgb(208, 215, 221);
+    }
+
+    input[type="text" i] {
+        padding: 2px 2px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+</style>
+
 </html>
